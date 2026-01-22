@@ -192,32 +192,8 @@
                 <div class="mb-16">
                     <h3 class="text-4xl font-black mb-8 uppercase bg-black text-white inline-block px-4 py-1">THE RIG &
                         STACK</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        <!-- Card 1 -->
-                        <div
-                            class="bg-white border-4 border-black p-4 neo-shadow hover:bg-yellow-200 transition-colors">
-                            <div class="text-xs font-bold uppercase mb-2 text-gray-500">CPU</div>
-                            <div class="text-xl font-black">M3 MAX</div>
-                            <div class="text-xs font-mono mt-1">12-CORE</div>
-                        </div>
-                        <!-- Card 2 -->
-                        <div class="bg-white border-4 border-black p-4 neo-shadow hover:bg-green-200 transition-colors">
-                            <div class="text-xs font-bold uppercase mb-2 text-gray-500">EDITOR</div>
-                            <div class="text-xl font-black">VS CODE</div>
-                            <div class="text-xs font-mono mt-1">ZSH THEME</div>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="bg-white border-4 border-black p-4 neo-shadow hover:bg-blue-200 transition-colors">
-                            <div class="text-xs font-bold uppercase mb-2 text-gray-500">FRAMEWORK</div>
-                            <div class="text-xl font-black">NEXT.JS</div>
-                            <div class="text-xs font-mono mt-1">v14.0.2</div>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="bg-white border-4 border-black p-4 neo-shadow hover:bg-pink-200 transition-colors">
-                            <div class="text-xs font-bold uppercase mb-2 text-gray-500">DB</div>
-                            <div class="text-xl font-black">POSTGRES</div>
-                            <div class="text-xs font-mono mt-1">SUPABASE</div>
-                        </div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="stack-container">
+                        <!-- Injected by JS -->
                     </div>
                 </div>
 
@@ -447,17 +423,31 @@
         // DATA SOURCE
         const appData = {
             metadata: {
-                version: "v24.0.1",
-                streak: 12,
-                status: "ACTIVE SPRINT",
-                focus: "Refactoring the authentication middleware to support multi-tenancy."
+                version: "v24.0.2",
+                streak: 13,
+                status: "LEARNING MODE",
+                focus: "Mastering MLOps: DVC, DagsHub & Data Versioning."
             },
+            stack: [
+                { label: "CPU", value: "M3 MAX", sub: "12-CORE", color: "hover:bg-yellow-200" },
+                { label: "EDITOR", value: "VS CODE", sub: "ZSH THEME", color: "hover:bg-green-200" },
+                { label: "FRAMEWORK", value: "NEXT.JS", sub: "v14.0.2", color: "hover:bg-blue-200" },
+                { label: "MLOPS", value: "DVC", sub: "DAGSHUB", color: "hover:bg-pink-200" }
+            ],
             logs: [
                 {
+                    id: 5,
+                    date: "Jan 23, 2026",
+                    title: "MLOps: DVC & DagsHub",
+                    description: "Started learning <strong>MLOps</strong>. Explored <strong>DVC</strong> (Data Version Control) for handling large datasets and <strong>DagsHub</strong> for experiment tracking. It's like Git for data!",
+                    type: "feature",
+                    tags: ["MLOps", "DVC", "Data"]
+                },
+                {
                     id: 4,
-                    date: "Jan 22, 2026",
+                    date: "Jan 22",
                     title: "LeetCode, NLP & Bigram",
-                    description: "<strong>NLP (Naive Bayes):</strong> Sentiment Analysis. Logic: Calc unique words, Prob(Pos/Neg). Ignore OOV words. Score = (Count + 1) * Prob.<br><br><strong>LeetCode:</strong> 'Total Waviness'. Logic: Int to String -> Split to triplets -> Check if mid < neighbors.<br><br><strong>Bigram:</strong> Solved a Bigram problem from PYQs.",
+                    description: "<strong>NLP:</strong> Naive Bayes Sentiment Analysis.<br><strong>LeetCode:</strong> 'Total Waviness'.<br><strong>Bigram:</strong> Solved PYQs.",
                     type: "feature",
                     tags: ["Algorithms", "NLP", "Bigram"]
                 },
@@ -476,14 +466,6 @@
                     description: "Fixed the memory leak in the socket handler. (It came back lol)",
                     type: "fix",
                     tags: ["Backend", "Bugs"]
-                },
-                {
-                    id: 3,
-                    date: "Jan 19",
-                    title: "Dark Mode Added",
-                    description: "Added dark mode. It's just `filter: invert(1)`. Lazy but works.",
-                    type: "feature",
-                    tags: ["UI", "CSS"]
                 }
             ]
         };
@@ -553,11 +535,25 @@
             }
         }
 
+        function renderStack() {
+            const container = document.getElementById('stack-container');
+            if (container) {
+                container.innerHTML = appData.stack.map(item => `
+                    <div class="bg-white border-4 border-black p-4 neo-shadow ${item.color} transition-colors">
+                        <div class="text-xs font-bold uppercase mb-2 text-gray-500">${item.label}</div>
+                        <div class="text-xl font-black">${item.value}</div>
+                        <div class="text-xs font-mono mt-1">${item.sub}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
         // INIT
         function init() {
             renderNeoBrutalism();
             renderSwissGrid();
             renderPunkCollage();
+            renderStack();
             show(1);
         }
 
